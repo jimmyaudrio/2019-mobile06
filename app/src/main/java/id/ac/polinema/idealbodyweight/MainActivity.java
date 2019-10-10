@@ -9,7 +9,13 @@ import android.view.MenuItem;
 
 import id.ac.polinema.idealbodyweight.fragment.AboutFragment;
 
-public class MainActivity extends AppCompatActivity {
+
+
+public class MainActivity extends AppCompatActivity implements
+		MenuFragment.OnFragmentInteractionListener
+{
+
+
 
 	// Deklarasikan atribut Fragment di sini
     private AboutFragment aboutFragment;
