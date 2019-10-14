@@ -6,62 +6,64 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import id.ac.polinema.idealbodyweight.R;
+import id.ac.polinema.idealbodyweight.util.BodyMassIndex;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ResultFragment.OnFragmentInteractionListener} interface
+ * {@link BodyMassIndexFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class ResultFragment extends Fragment {
+public class BodyMassIndexFragment extends Fragment {
 
-    public static final String BROCA_TAG = "BrocaIndex";
-    public static final String BMI_TAG = "BMIndex";
-
-    private String information, tag;
     private OnFragmentInteractionListener mListener;
 
-    public ResultFragment() {
+    public BodyMassIndexFragment() {
         // Required empty public constructor
     }
 
-    public void setInformation(String information) {
-        this.information = information;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_result, container, false);
-        TextView informationText = view.findViewById(R.id.text_information);
-        informationText.setText(information);
-        Button tryAgainButton = view.findViewById(R.id.button_try_again);
-        tryAgainButton.setOnClickListener(new View.OnClickListener() {
+        View view = inflater.inflate(R.layout.fragment_body_mass_index, container, false);
+        final EditText massText = view.findViewById(R.id.input_mass);
+        final EditText heightText = view.findViewById(R.id.input_height);
+
+        Button calculateButton = view.findViewById(R.id.button_calculate);
+        calculateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
-                    if (tag.equalsIgnoreCase(BROCA_TAG))
-                        mListener.onTryAgainButtonClicked(BROCA_TAG);
-                    else {
-                        mListener.onTryAgainButtonClicked(BMI_TAG);
+                    String massString = massText.getText().toString();
+                    String heightString = heightText.getText().toString();
+
+                    if (!TextUtils.isEmpty(massString) && !TextUtils.isEmpty(heightString)) {
+                        float height = Float.valueOf(heightString);
+                        float mass = Float.valueOf(massString);
+
+                        BodyMassIndex bmi = new BodyMassIndex(mass, height);
+                        mListener.onCalculateBMIClicked(bmi.getIndex(), ResultFragment.BMI_TAG);
+                    } else {
+                        Toast.makeText(getActivity(), "Please input your height and mass", Toast.LENGTH_SHORT).show();
                     }
+
                 }
             }
         });
         return view;
     }
+
 
     @Override
     public void onAttach(Context context) {
@@ -92,6 +94,6 @@ public class ResultFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onTryAgainButtonClicked(String tag);
+        void onCalculateBMIClicked(float index, String tag);
     }
 }
