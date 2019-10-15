@@ -1,4 +1,4 @@
-package id.ac.polinema.idealbodyweight.fragment;
+package id.ac.polinema.idealbodyweight.util;
 
 public class BodyMassIndex {
     private float mass;

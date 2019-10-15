@@ -13,14 +13,11 @@ import id.ac.polinema.idealbodyweight.fragment.BrocaIndexFragment;
 import id.ac.polinema.idealbodyweight.fragment.MenuFragment;
 import id.ac.polinema.idealbodyweight.fragment.ResultFragment;
 
-
 public class MainActivity extends AppCompatActivity implements
 		MenuFragment.OnFragmentInteractionListener,
 		BrocaIndexFragment.OnFragmentInteractionListener,
 		ResultFragment.OnFragmentInteractionListener,
 		BodyMassIndexFragment.OnFragmentInteractionListener{
-
-
 	// Deklarasikan atribut Fragment di sinii
 	private  MenuFragment menuFragment;
     private AboutFragment aboutFragment;
@@ -76,8 +73,7 @@ public class MainActivity extends AppCompatActivity implements
 				.replace(R.id.fragment_container, bodyMassIndexFragment)
 				.commit();
 
-
-	}
+    }
 
 	@Override
 			public void onCalculateBrocaIndexClicked(float index) {
